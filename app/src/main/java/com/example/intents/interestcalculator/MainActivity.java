@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -28,6 +29,7 @@ public class MainActivity extends Activity {
     int year_x,month_x,day_x;
     int year_y,month_y,day_y;
     int sMonth,eMonth;
+    private static final String TAG = "your activity name";
 static final int DIALOG_ID=0;
     static final int DIALOG_IDI=1;
     @Override
@@ -45,96 +47,10 @@ static final int DIALOG_ID=0;
         t1 = (TextView) findViewById(R.id.t1);
         rb1 = (RadioButton) findViewById(R.id.radioButton);
         rb2 = (RadioButton) findViewById(R.id.radioButton2);
-        final Calendar cal=Calendar.getInstance();
-        year_x=cal.get(Calendar.YEAR);
-        month_x=cal.get(Calendar.MONTH);
-        day_x=cal.get(Calendar.DAY_OF_MONTH);
-        showDialogOnbuttonClick();
-        final Calendar cal1=Calendar.getInstance();
-        year_y=cal1.get(Calendar.YEAR);
-        month_y=cal1.get(Calendar.MONTH);
-        day_y=cal1.get(Calendar.DAY_OF_MONTH);
-        showDialogOnbuttonClick1();
+
 
 
     }
-
-
-
-
-    public void showDialogOnbuttonClick() {
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDialog(DIALOG_ID);
-
-                    }
-                }
-
-
-        );
-
-
-    }
-
-private DatePickerDialog.OnDateSetListener dpickerListener1=new DatePickerDialog.OnDateSetListener(){
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-     year_x=year;
-     month_x=month+1;
-     day_x=dayOfMonth;
-        Toast.makeText(MainActivity.this,year_x+ "/" +month_x+ "/" +day_x, Toast.LENGTH_LONG).show();
-    }
-};
-
-
-    public void showDialogOnbuttonClick1() {
-        button3 = (Button)findViewById(R.id.button3);
-        button3.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showDialog(DIALOG_IDI);
-
-                    }
-                }
-
-
-        );
-
-
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id){
-        switch(id){
-            case DIALOG_ID:
-                return new DatePickerDialog(this,dpickerListener1,year_x,month_x,day_x);
-            case DIALOG_IDI:
-                return new DatePickerDialog(this,dpickerListener,year_y,month_y,day_y);
-        }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener dpickerListener=new DatePickerDialog.OnDateSetListener(){
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-            year_y=year;
-            month_y=month+1;
-            day_y=dayOfMonth;
-            Toast.makeText(MainActivity.this,year_y+ "/" +month_y+ "/" +day_y, Toast.LENGTH_LONG).show();
-
-        }
-
-    };
-
-
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -149,12 +65,11 @@ private DatePickerDialog.OnDateSetListener dpickerListener1=new DatePickerDialog
 
                             num1 = Integer.parseInt(PA_bar.getText().toString());
                             num2 = Integer.parseInt(IR_bar.getText().toString());
-                            num=month_x-month_y;
-             year_bar.setText(num);
                             num = Integer.parseInt(year_bar.getText().toString());
 
-                            int num3 = num - (num / 30);
-                            int si = (num1 * num2 * num3) / 100;
+                            float num3 = num - (float)(num / 30);
+                            Log.d(TAG,"APP IS working"+num3);
+                            float si = (num1 * num2 * num3) / 100;
                             String res = String.valueOf(si);
                             t1.setText(res);
 
